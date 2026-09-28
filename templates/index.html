@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Directory</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Directory</h1>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search employees..."
+        onkeyup="searchEmployees()"
+    >
+
+    <div id="employees">
+
+        {% for employee in employees %}
+
+        <div class="employee">
+
+            <h2>{{ employee.name }}</h2>
+
+            <p>
+                <strong>Role:</strong>
+                {{ employee.role }}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                {{ employee.location }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+
+function searchEmployees() {
+
+    const search =
+        document.getElementById("search").value.toLowerCase();
+
+    const employees =
+        document.querySelectorAll(".employee");
+
+    employees.forEach(employee => {
+
+        const text =
+            employee.innerText.toLowerCase();
+
+        employee.style.display =
+            text.includes(search) ? "block" : "none";
+
+    });
+}
+
+</script>
+
+</body>
+</html>

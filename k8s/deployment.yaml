@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: employee-directory
+
+spec:
+
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: employee-directory
+
+  template:
+
+    metadata:
+      labels:
+        app: employee-directory
+
+    spec:
+
+      containers:
+
+      - name: employee-directory
+
+        image: 690167396653.dkr.ecr.ap-south-1.amazonaws.com/employee-directory:1.0.0
+
+        ports:
+        - containerPort: 8080
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
+          limits:
+            cpu: 500m
+            memory: 256Mi
+
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 20
